@@ -13,38 +13,79 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  createdAt DateTime @default(now())
-}
+// model User {
+//   id Int @id @default(autoincrement())
+//   name String
+//   email String @unique
+//   createdAt DateTime @default(now())
+// }
 
 //Atividade Oficina Mecânica
 
-model Cliente {
+// model Cliente {
+//   id Int @id @default(autoincrement())
+//   name String
+//   email String @unique
+//   createdAt DateTime @default(now())
+//   veiculo Veiculo[]
+//   ordemServico OrdemdeServico[]
+// }
+
+// model Veiculo{
+//   id Int @id @default(autoincrement())
+//   marca String
+//   modelo String
+//   ano String
+//   placa String @unique
+//   clienteId Int 
+//   cliente Cliente @relation(fields: [clienteId], references: [id])
+//   ordemServico OrdemdeServico[]
+// }
+
+// model Servico{
+//   id Int @id @default(autoincrement())
+//   nome String
+//   descricao String
+//   itemServico ItemServico[]
+// }
+// model ItemServico{
+//   id Int @id @default(autoincrement())
+//   servico Servico @relation(fields: [servicoId], references: [id])
+//   servicoId Int
+//   quantidade Int
+//   ordemServico OrdemdeServico[]
+// }
+// model OrdemdeServico{
+//   id Int @id @default(autoincrement())
+
+//   clienteId Int 
+//   cliente Cliente @relation(fields: [clienteId], references: [id])
+
+//   veiculoId Int
+//   veiculo Veiculo @relation(fields: [veiculoId], references: [id])
+
+//   dataEntrada DateTime
+//   dataConclusao DateTime
+//   status String
+//   observacoes String?
+//   itemServico ItemServico[]
+// }
+
+
+//Mudando para prisma
+
+model User{
   id Int @id @default(autoincrement())
   name String
   email String @unique
-  createdAt DateTime @default(now())
-  veiculo Veiculo
+  password String
+  task Task[]
 }
 
-model Veiculo{
+model Task{
   id Int @id @default(autoincrement())
-  marca String
-  modelo String
-  ano String
-  placa String @unique
-  clienteId Int @unique
-  cliente Cliente @relation(fields: [clienteId], references: [id])
-}
-
-model Servico{
-  id Int @id @default(autoincrement())
-  nome String
-  descricao String
-}
-model OrdemdeServico{
-  
+  title String
+  description String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
